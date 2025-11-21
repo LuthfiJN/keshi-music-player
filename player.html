@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Player - Music Player</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+<header>
+  <h1>keshibeats</h1>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="player.html" class="active">Player</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main>
+  <section class="player-container">
+    <h2>Music Player</h2>
+
+    <img class="player-cover" src="https://i.scdn.co/image/ab67616d0000b273617997bc09bb7fa23624eff5">
+
+    <h3 id="nowPlaying">Now Playing: -</h3>
+
+    <div class="player-controls">
+      <button onclick="playAudio()">Play</button>
+      <button onclick="pauseAudio()">Pause</button>
+      <button onclick="stopAudio()">Stop</button>
+    </div>
+
+    <h3>Song List</h3>
+    <div class="song-list">
+      <button onclick="playSong('songs/song1.mp3')">Song 1</button>
+      <button onclick="playSong('songs/song2.mp3')">Song 2</button>
+      <button onclick="playSong('songs/song3.mp3')">Song 3</button>
+    </div>
+
+  </section>
+</main>
+
+<footer>
+  <p>Luthfi Jatmiko Nugroho - KSM Android | <a href="#">GitHub</a></p>
+</footer>
+
+</body>
+</html>
