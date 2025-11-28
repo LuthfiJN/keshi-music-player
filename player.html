@@ -1,49 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Player - Music Player</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Player - Keshi Beats</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
 
 <header>
-  <h1>keshibeats</h1>
-  <nav>
-    <a href="home.html">Home</a>
-    <a href="player.html" class="active">Player</a>
-    <a href="about.html">About</a>
-  </nav>
+  <h1>keshibeats</h1>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="player.html" class="active">Player</a>
+    <a href="about.html">About</a>
+  </nav>
 </header>
 
 <main>
-  <section class="player-container">
-    <h2>Music Player</h2>
+  <section class="player-container">
+    <h2>Music Player</h2>
 
-    <img class="player-cover" src="https://i.scdn.co/image/ab67616d0000b273617997bc09bb7fa23624eff5">
+    <img class="player-cover" src="https://i.scdn.co/image/ab67616d0000b273617997bc09bb7fa23624eff5">
 
-    <h3 id="nowPlaying">Now Playing: -</h3>
+    <h3 id="nowPlaying">Now Playing: -</h3>
 
-    <div class="player-controls">
-      <button onclick="playAudio()">Play</button>
-      <button onclick="pauseAudio()">Pause</button>
-      <button onclick="stopAudio()">Stop</button>
-    </div>
+    <div class="player-controls">
+      <button onclick="prevSong()">⏮️</button>
+            <button id="playPauseButton" onclick="togglePlayPause()">▶️</button>
+      <button onclick="stopAudio()">⏹️</button>
+      <button onclick="nextSong()">⏭️</button>
+    </div>
 
-    <h3>Song List</h3>
-    <div class="song-list">
-      <button onclick="playSong('songs/song1.mp3')">Song 1</button>
-      <button onclick="playSong('songs/song2.mp3')">Song 2</button>
-      <button onclick="playSong('songs/song3.mp3')">Song 3</button>
-    </div>
+    <div class="progress-info">
+      <span id="currentTime">0:00</span>
+      <div class="progress-container">
+        <input type="range" id="progressBar" value="0" min="0" max="100">
+      </div>
+      <span id="durationTime">0:00</span>
+    </div>
 
-  </section>
+    <div class="volume-control">
+      <span>🔊</span>
+      <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+    </div>
+
+    <h3>Pilih Lagu</h3> 
+    <div class="custom-dropdown-container">
+      <div id="songSelectorDisplay" class="dropdown-display">Pilih Lagu untuk Diputar</div>
+      <ul id="songSelectorList" class="dropdown-list">
+              </ul>
+    </div>
+    
+    <div class="lyrics-selection">
+      <h3>Lyrics</h3>
+      <div class="custom-dropdown-container">
+        <div id="lyricSelectorDisplay" class="dropdown-display">Select a Song for Lyrics</div>
+        <ul id="lyricSelectorList" class="dropdown-list">
+                  </ul>
+      </div>
+    </div>
+    
+    <div class="lyrics-box">
+      <div id="displayedLyrics" class="lyrics-content">
+        <p>Pilih lagu di atas untuk menampilkan lirik dan memutar.</p>
+      </div>
+    </div>
+
+  </section>
 </main>
 
 <footer>
-  <p>Luthfi Jatmiko Nugroho - KSM Android | <a href="#">GitHub</a></p>
+  <p>© Luthfi Jatmiko Nugroho - KSM Android | <a href="https://github.com/LuthfiJN/keshi-music-player">GitHub</a></p>
 </footer>
+
+<script type="text/template" id="template-lyrics">
+  <div id="lyrics-less_of_you" data-title="Less of You">
+    <p>
+      <u>less of you</u>
+      
+      Hello
+      Are you awake right now?
+      God, I just need to hear the sound of you
+      Please, calm me down
+      And I know that it's selfish, but
+      You are the only thing that's
+      Ever made sense to me, I
+      I don't wanna do this
+      I don't know how to do this without you
+      
+      Cling to your side
+      Voices at night
+      Cover my eyes
+      I'm terrified
+      No in between
+      A face on a screen
+      Ain't an adequate replacement for your being with me
+      Yeah, yeah
+      
+      Too much time in the limelight
+      Gimme your all on the land line
+      Want it so bad but I won't lie
+      And it just gets worse in the night time
+      
+      Never stays for long
+      And she's gone in the morning
+      When you come home
+      I just got over being less of you
+      
+      When you leave me
+      I'm in pieces
+      Maybe it's better if we cut it loose
+      
+      Tell me how your day was
+      No, I'm not okay
+      I don't know, I don't know, I don't know
+      I don't know, I don't know, I don't know
+      Time never moved so slow
+      Bed time, hit your phone up
+      Tell me where to go, where to go
+      Tell me where to go, where to go
+      
+      Too much time in the limelight
+      Gimme your all on the land line
+      Want it so bad but I won't lie
+      And it just gets worse in the night time
+      
+      Never stays for long
+      And she's gone in the morning
+      
+      When you come home
+      I just got over being less of you
+      When you leave me
+      I'm in pieces
+      Maybe it's better if we cut it loose
+      
+      I don't know how to do this without you
+      I don't know, I don't know, I don't know
+      I don't know how to do this without you
+      I don't know, I don't know, I don't know
+      I don't know how to do this without you
+    </p>
+  </div>
+
+  <div id="lyrics-get_it" data-title="GET IT">
+    <p>
+      <u>GET IT</u>
+
+      Gabriel
+      Ça peut être tout ce que tu veux
+      N'aie pas peur de tout vouloir
+      Il n'y a pas assez (keshi)
+      
+      Big ice, feelin' so fine
+      Shit is on me and we spendin' all night
+      Come and get it, get it, get it, get it
+      Get it, get it, get it
+      
+      Got my bag right, on my own time
+      Now these bitches tongue-tied tryna get on this side
+      Better come and get it, get it, get it, get it, get it
+      Get it, get it (yeah), get it, get it
+      
+      Paranoid, white noise, think they up to some
+      Come and take more when they give you none
+      See me doin' good, why you reachin'?
+      'Cause I got everything I ever needed
+      
+      Got my money (check), lady (check)
+      Rollie (check), Mary (check)
+      From the Southside with my dawgies on deck
+      And we can't sit still 'less a chain on the neck, huh
+      
+      Give me everything, trade you anything you want
+      All this cash on me, doesn't matter what it cost
+      Give me everything, trade you anything you want
+      All this cash on me, all, all this cash on me
+      
+      Big ice, feelin' so fine
+      Shit is on me and we spendin' all night
+      Come and get it, get it, get it, get it
+      Get it, get it, get it
+      
+      Got my bag right, on my own time
+      Now these bitches tongue-tied tryna get on this side
+      Better come and get it, get it, get it, get it
+      Get it, get it, get it, get it
+      
+      Ooh, ooh-ooh
+      You don't even know which one you are
+      Do you? Ooh, ooh
+      Having trouble telling them apart
+    </p>
+  </div>
+
+  <div id="lyrics-bodies" data-title="Bodies">
+    <p>
+      <u>Bodies</u>
+
+      I take it you're leaving
+      This never gets easier for me
+      
+      I'll miss how you promised me the world and I believed it
+      You give me your reasons
+      And they cut me deeper than it seems
+      No need to worry 'bout it
+      I can stop the bleeding
+      
+      Oh, babe, you know
+      It happens all the time
+      You give your heart to someone
+      But they go and change their mind
+      
+      Everybody wants somebody
+      Needs nobody, anybody
+      
+      Used to things falling apart
+      Knew how it would end from the start
+      But I can't help but chase the feeling
+      
+      Oh, but, babe, you know
+      It happens all the time
+      You give your heart to someone
+      But they go and change their mind
+      
+      You don't have to stay you know
+      If it's all a waste of time
+      'Cause I'm used to having no one
+      To lay here by my side
+      
+      Everybody wants somebody, needs nobody, anybody
+      Everybody wants somebody, needs nobody, anybody
+      Ooh, you leave me torn in two, ooh
+      Ooh, like they always do, ooh
+      
+      Everybody wants somebody (somebody)
+      Need somebody, anybody (somebody)
+      Everybody wants somebody (somebody)
+      Need somebody, anybody (somebody)
+    </p>
+  </div>
+
+  <div id="lyrics-soft_spot" data-title="Soft Spot">
+    <p>
+      <u>Soft Spot</u>
+
+      I don't go out, but I'll do it for you
+      You never liked it when I drink too much
+      I hate to dance, but I'd dance with you
+      'Cause I'd do anything to feel your touch
+      
+      Don't like anybody, tell me why it's different with you
+      Don't believe in love, but no one makes me feel like you do
+      I don't say it much 'cause I just always thought
+      That you knew, oh
+      
+      It's what you do to me
+      I'm wrapped around your finger and I can't stop
+      You know I got a soft spot for you
+      You know I got a soft spot for you
+      
+      Baby, can't you see?
+      I need you 'cause you're everything that I'm not
+      You know I got a soft spot for you
+      You know I got a soft spot for you
+      
+      Too late, don't wanna fall, baby, I just
+      Don't need somebody else to throw me aside
+      But I'm up all night, thinkin' 'bout how
+      It could be you to change my heart, but I
+      
+      Don't like anybody, tell me why it's different with you
+      Don't believe in love, but no one makes me feel like you do
+      I don't say it much 'cause I just always thought that
+      You knew, oh
+      
+      It's what you do to me
+      I'm wrapped around your finger and I can't stop
+      You know I got a soft spot for you
+      You know I got a soft spot for you
+      
+      Baby, can't you see?
+      I need you 'cause you're everything that I'm not
+      You know I got a soft spot for you
+      You know I got a soft spot for you
+      
+      For you
+      For you
+      For you
+      You know I got a soft spot for you
+      
+      It's what you do to me
+      I'm wrapped around your finger and I can't stop
+      You know I got a soft spot for you
+      You know I got a soft spot for you
+    </p>
+  </div>
+
+  <div id="lyrics-angostura" data-title="ANGOSTURA">
+    <p>
+      <u>ANGOSTURA</u>
+
+      Babe, I can't lie
+      You been on my mind again
+      Go out one more time
+      Yeah, we can do the things you like
+      
+      You don't need a reason for it
+      Tell me what you need, make it easy for ya
+      All of this talk ain't enough
+      Are you down to see me or what?
+      When you come through, you know I got you
+      Babe, I got you
+      
+      So tell me when you roll through the H
+      Goddamn, girl, you look amazing
+      Babe, we can drink it all away
+      What you say, what you say, what you s- (keshi)
+      
+      Pour me up another, let it go, I
+      Kick it with my brothers and it's alright
+      I just want a lover for the whole night, yeah
+      Whole night, yeah, whole night
+      
+      Pour me up another, let it go, I
+      Kick it with my brothers and it's alright
+      I just want a lover for thе whole night
+      For the whole night, yеah, whole night
+      
+      Body get hot like sauna
+      Ice on the wrist, big comma
+      Baby girl, come bring it back, back, back
+      You can take all the time you wanna
+      
+      'Cause I ain't in a rush to meet ya
+      Small talk never meant much to me, nah
+      We're face to face with it, love
+      Go waist to waist with it, yah
+      When you come through, you know I got you, mmh
+      Babe, I got you
+      
+      So tell me when you roll through the H
+      Goddamn, girl, you look amazing
+      Babe, we can drink it all away
+      What you say, what you say, what you say?
+      
+      Kick it with my brothers and it's alright (oh)
+      I just want a lover for the whole night, yeah
+      Whole night, yeah, whole night
+      
+      Pour me up another, let it go, I
+      Kick it with my brothers and it's alright (oh)
+      I just want a lover for the whole night (for the whole night)
+      For the whole night, yeah, whole night (whole night, yeah)
+    </p>
+  </div>
+</script>
 
 </body>
 </html>
